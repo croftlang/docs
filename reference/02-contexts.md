@@ -4,12 +4,12 @@ Everything in Croft is declared inside a context. A context is a bounded context
 
 ## Publishing and using terms
 
-A context publishes the terms other contexts may use.
+A context exports the terms other contexts may import.
 
 ```croft
 // Rooms, the enemies in them, and moving between them.
 context Dungeon {
-    publish {
+    export {
         RoomId,
         EnemyId,
         Position,
@@ -18,11 +18,11 @@ context Dungeon {
 }
 ```
 
-Another context imports only what it needs, with `use { ... } from`. When another name reads better, give the term an alias with `as`.
+Another context imports only what it needs, with `import { ... } from`. When another name reads better, give the term an alias with `as`.
 
 ```croft
 context Scoring {
-    use {
+    import {
         EnemyId,
         Room.EnemyDefeated as EnemyDefeated
     } from Dungeon
@@ -53,4 +53,4 @@ A context, or an aggregate, can be written in several parts. The compiler joins 
 
 A comment directly above `context` documents it, like the one above `Dungeon` earlier.
 
-When a context is written in several files, the comment above the part with `publish` is the context's doc. The comments above the other parts describe their own file.
+When a context is written in several files, the comment above the part with `export` is the context's doc. The comments above the other parts describe their own file.

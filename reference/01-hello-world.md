@@ -20,18 +20,18 @@ croft run hello.croft
 
 ## Adding a context
 
-Real code lives in [contexts](02-contexts.md). Here the greeting moves into one, which publishes `greet` so the domain can use it.
+Real code lives in [contexts](02-contexts.md). Here the greeting moves into one, which exports `greet` so the domain can import it.
 
 ```croft
 context Greeter {
-    publish { greet }
+    export { greet }
 
     fn greet(): String = "Hello, World"
 }
 
 domain Program {
     contexts { Greeter }
-    use { greet } from Greeter
+    import { greet } from Greeter
     calls { Console }
 } = Console.print(greet()) // prints Hello, World
 ```

@@ -47,7 +47,7 @@ A target with `checks = false` wraps the answer around in 32 bits instead, and d
 `Decimal<2>` is a fixed-point number with two decimal places. It is exact, and works on machines without floating point. It comes from Std.Numbers.
 
 ```croft
-use { Decimal } from Std.Numbers
+import { Decimal } from Std.Numbers
 ```
 
 It keeps a whole number of hundredths in the same 32 bits, so it holds up to 21474836.47. An answer past that is a mistake in the same way as for `Int`, and stops the program with "a decimal doesn't fit in 32 bits".

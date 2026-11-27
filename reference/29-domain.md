@@ -4,7 +4,7 @@ The domain is the whole program, declared once, outside every [context](02-conte
 
 ## The contract
 
-The contract holds the context map: every context, with arrows from upstream to downstream. A context may only use contexts upstream of it, and the arrows may not go round in a circle.
+The contract holds the context map: every context, with arrows from upstream to downstream. A context may only import from contexts upstream of it, and the arrows may not go round in a circle.
 
 ```croft
 contexts {
@@ -16,8 +16,8 @@ contexts {
 The contract also imports what the body needs, and names the [ports](25-ports.md) it calls, with the context they come from.
 
 ```croft
-use { SetUpRooms, PlayTurn, FIRST_ROOM } from Dungeon
-use { SetUpScoring } from Scoring
+import { SetUpRooms, PlayTurn, FIRST_ROOM } from Dungeon
+import { SetUpScoring } from Scoring
 
 calls { Keyboard as keyboard } from Dungeon
 ```
@@ -31,14 +31,14 @@ Here is the whole domain, contract and body together.
 ```croft
 // game.croft
 domain Game {
-    // upstream -> downstream: a context only uses contexts upstream of it
+    // upstream -> downstream: a context only imports from contexts upstream of it
     contexts {
         Dungeon -> Scoring
         Dungeon -> Platform
     }
 
-    use { SetUpRooms, PlayTurn, FIRST_ROOM } from Dungeon
-    use { SetUpScoring } from Scoring
+    import { SetUpRooms, PlayTurn, FIRST_ROOM } from Dungeon
+    import { SetUpScoring } from Scoring
 
     calls { Keyboard as keyboard } from Dungeon
 } = {
@@ -56,10 +56,10 @@ domain Game {
 
 ## Starting data
 
-The body only sees what contexts publish, so each context sets up its own starting data. Dungeon publishes a [service](27-services.md) for the domain to call.
+The body only sees what contexts export, so each context sets up its own starting data. Dungeon exports a [service](27-services.md) for the domain to call.
 
 ```croft
-// in context Dungeon, published for the domain
+// in context Dungeon, exported for the domain
 service SetUpRooms(): Result<Unit, GameError> {
     calls { Rooms }
 } = {

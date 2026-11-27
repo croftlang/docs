@@ -77,7 +77,7 @@ service PlayTurn(room_id: RoomId, pressed: Option<Key>): Result<Unit, GameError>
 } = ...
 ```
 
-Like `use`, `calls` can bring a port in from another context and give it an alias with `as`.
+Like `import`, `calls` can bring a port in from another context and give it an alias with `as`.
 
 ```croft
 // called as `keys.pressed()`
@@ -86,4 +86,4 @@ service ReadKey(): Option<Key> {
 } = keys.pressed()
 ```
 
-The difference is that `use` only brings in names, while `calls` also lets the body call them.
+The difference is that `import` only brings in names, while `calls` also lets the body call them.

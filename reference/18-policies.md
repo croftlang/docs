@@ -23,4 +23,4 @@ policy ScoreOnDefeat when Dungeon.Room.EnemyDefeated {
 }
 ```
 
-The Dungeon has to [publish](02-contexts.md) `Room.EnemyDefeated` for Scoring to see it. Apart from that, the Dungeon doesn't know Scoring exists, which is rather the point.
+The Dungeon has to [export](02-contexts.md) `Room.EnemyDefeated` for Scoring to see it. Apart from that, the Dungeon doesn't know Scoring exists, which is rather the point.

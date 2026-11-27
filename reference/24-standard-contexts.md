@@ -15,9 +15,9 @@ An import covers every file of the context. A standard context needs no arrow in
 ```croft
 context Notes
 
-use { trim, split, to_upper, to_bytes, to_text, replace, join, code_at, from_code, to_hex, from_hex, to_decimal } from Std.Text
-use { Decimal, max, min, abs, clamp, pow, sign, checked_add } from Std.Numbers
-use { Files, FileError } from Std.Files
+import { trim, split, to_upper, to_bytes, to_text, replace, join, code_at, from_code, to_hex, from_hex, to_decimal } from Std.Text
+import { Decimal, max, min, abs, clamp, pow, sign, checked_add } from Std.Numbers
+import { Files, FileError } from Std.Files
 ```
 
 Importing costs nothing you don't use: whatever is imported, the generated C only carries the runtime functions the program calls.
@@ -25,7 +25,7 @@ Importing costs nothing you don't use: whatever is imported, the generated C onl
 Leave an import out and the compiler tells you which one you need.
 
 ```croft
-// `FileError` needs `use { FileError } from Std.Files`
+// `FileError` needs `import { FileError } from Std.Files`
 // `Files` needs `calls { Files } from Std.Files`
 ```
 
@@ -164,7 +164,7 @@ checked_add(a, b)   checked_subtract(a, b)   checked_multiply(a, b)   // Option<
 `Map<K, V>` and `Set<T>` hold as many entries as their `Length` constraints allow.
 
 ```croft
-use { Map, Set } from Std.Collections
+import { Map, Set } from Std.Collections
 ```
 
 A map's `get` gives back an `Option`. `set` and `remove` give back a changed copy.
@@ -207,7 +207,7 @@ seen.items                  // List<Int>: [3, 1, 2]
 Bytes as text and back, text for URLs, and checksums.
 
 ```croft
-use { to_hex, from_hex, to_base64, from_base64, percent_encode, percent_decode, crc16, crc32 } from Std.Encoding
+import { to_hex, from_hex, to_base64, from_base64, percent_encode, percent_decode, crc16, crc32 } from Std.Encoding
 ```
 
 The `to_` names, the percent methods, `crc16` and `crc32` are methods of what they read, as `to_bytes` is in Std.Text. `to_hex`, `to_base64`, `crc16` and `crc32` belong to `Bytes`, and the percent methods to a `String`. `from_hex` and `from_base64` are functions taking the text, since they make `Bytes` from a `String`.
@@ -336,10 +336,10 @@ The `Http` port has four operations. Each gives back a `Response { status, heade
 // get(url, headers)   post(url, headers, body)   put(url, headers, body)   delete(url, headers)
 ```
 
-Instead of a `use`, a service can bring the port in with `calls ... from`. Headers are a map, or `[:]` for none.
+Instead of an `import`, a service can bring the port in with `calls ... from`. Headers are a map, or `[:]` for none.
 
 ```croft
-use { Response, HttpError } from Std.Http
+import { Response, HttpError } from Std.Http
 
 service Upload(save: Bytes): Result<Unit, HttpError> {
     calls { Http } from Std.Http
@@ -367,7 +367,7 @@ A header fails the request with `Unreachable` before anything is sent if its nam
 `between(low, high)` gives a whole number with both ends included.
 
 ```croft
-use { Random } from Std.Random
+import { Random } from Std.Random
 
 service Roll(): Int {
     calls { Random }
@@ -381,7 +381,7 @@ service Roll(): Int {
 Std.Time has `Date { year, month, day }`, `Time { hour, minute, second }`, and the `Clock` port.
 
 ```croft
-use { Date, Time, Clock, DayInMonth, is_leap_year, days_between, add_days } from Std.Time
+import { Date, Time, Clock, DayInMonth, is_leap_year, days_between, add_days } from Std.Time
 ```
 
 The clock gives today's date and the time now.
@@ -420,7 +420,7 @@ A date past either end is an error from `croft check` when the date and the days
 
 ### Building on the calendar
 
-`DayInMonth` and `is_leap_year` are published, so a program's own [constraints](09-constraints.md) can build on them. `is_leap_year` is true of a year 4 divides, unless 100 does and 400 doesn't: `is_leap_year(1900)` is false, and `is_leap_year(2000)` is true.
+`DayInMonth` and `is_leap_year` are exported, so a program's own [constraints](09-constraints.md) can build on them. `is_leap_year` is true of a year 4 divides, unless 100 does and 400 doesn't: `is_leap_year(1900)` is false, and `is_leap_year(2000)` is true.
 
 ```croft
 constraint LeapYear(year: Int) = is_leap_year(year)
