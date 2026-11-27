@@ -48,11 +48,9 @@ Without a croft.toml, the program runs on the `desktop` target. Add one to name 
 
 ## The croft command
 
-The `croft` command checks, compiles, runs, measures and lays out a project, a folder or a single file.
+The `croft` command checks, compiles, runs, measures and lays out a project, a folder or a single file. If you haven't got it yet, [install](https://croftlang.com/install) it first.
 
 ```sh
-cargo install --path crates/croft_cli
-
 croft check .                        # compiler check
 croft compile .                      # check and compile to C
 croft run .                          # check, compile and run the C
