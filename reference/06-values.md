@@ -30,6 +30,31 @@ Make a value with its type name and its fields.
 let start = Position { x: 10, y: 20 }        // make a new Position
 ```
 
+## Starting values
+
+A field can have a starting value, written after its type and constraints. A value made without that field holds it.
+
+```croft
+value Treasure {
+    kind: TreasureKind
+    at: Position
+    found: Bool = false
+}
+
+let flask = Treasure { kind: Flask, at: start }    // found is false
+```
+
+A starting value is worked out on its own, so it can name constants and variants but not the other fields. When it breaks the field's constraints, it's an error from `croft check`.
+
+```croft
+value Lives {
+    // error: `Lives` starts with `12` for `count`, which breaks `Range(0, 9)`
+    count: Int where Range(0, 9) = 12
+}
+```
+
+The fields of entities, aggregates, [events](11-events.md), [errors](16-errors.md) and [adapters](28-adapters.md) can have starting values too. An [enum](05-enums.md) variant's fields can't, since they are given like arguments.
+
 ## Changing one
 
 A value never changes, so to change one you copy it with `with`, giving the fields that are different. The original stays as it was.

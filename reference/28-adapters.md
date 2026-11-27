@@ -4,20 +4,20 @@ An adapter implements a [port](25-ports.md), in Croft or with native C. Adapters
 
 ## Writing one
 
-An adapter's body comes after `=`, like a function's. It provides every operation its port declares, and the types come from the port, so the operations only name their parameters.
+An adapter is a declaration, not a body: its fields and operations go straight in braces, like an aggregate's members. It provides every operation its port declares, and the types come from the port, so the operations only name their parameters.
 
 ```croft
 // platform/spectrum.croft
 context Platform {
     import { Screen, Keyboard, Key } from Dungeon
 
-    adapter SpectrumScreen for Screen = {
+    adapter SpectrumScreen for Screen {
         fn clear() = native zx_cls()
         fn draw_sprite(sprite, at) = native sprite_draw(sprite, at.x, at.y)
         fn draw_text(text, at) = native zx_print_at(at.y / 8, at.x / 8, text)
     }
 
-    adapter SpectrumKeyboard for Keyboard = {
+    adapter SpectrumKeyboard for Keyboard {
         fn pressed() = native read_key()
     }
 }
@@ -50,12 +50,12 @@ void croft_files_read(croft_string_view path, croft_int most, croft_bytes_writer
 
 ## Adapters with state
 
-Adapters may hold state, changed with `set`. Every adapter field has a starting value, written after its type and constraints.
+Adapters may hold state, changed with `set`. Every adapter field needs a [starting value](06-values.md#starting-values), written after its type and constraints, which it holds when the program starts.
 
 This one is written in Croft, for tests. It hands out a fixed list of keys, then says Quit.
 
 ```croft
-adapter ScriptedKeyboard for Keyboard = {
+adapter ScriptedKeyboard for Keyboard {
     keys: List<Key> where Length(0, 32) = [Right, Right, Fire]
 
     fn pressed() = match keys.first {

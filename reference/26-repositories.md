@@ -72,7 +72,7 @@ An [adapter](28-adapters.md) written for the repository keeps aggregates its own
 
 ```croft
 // how cargos are kept, written for the repository
-adapter PostgresCargos for Cargos = {
+adapter PostgresCargos for Cargos {
     fn find(id) = native pg_find_cargo(id)
     fn awaiting_customs() = native pg_cargos_awaiting_customs()
     fn save(cargo) = native pg_save_cargo(cargo)
@@ -94,7 +94,7 @@ The Storage adapter can be MemoryStorage, which is the default, FileStorage, or 
 
 ```croft
 // where the bytes live
-adapter RedisStorage for Storage = {
+adapter RedisStorage for Storage {
     fn load(key) = native redis_get(key)
     fn save(key, data) = native redis_set(key, data)
     fn remove(key) = native redis_del(key)
