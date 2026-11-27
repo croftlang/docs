@@ -12,7 +12,7 @@ enum Direction { North, East, South, West }
 
 ## Variants with data
 
-Variants can carry data, and each one can carry different data, or none.
+Variants can carry data, and each one can carry different data, or none. A variant's fields are given like arguments, so unlike other fields they have no [starting values](06-values.md#starting-values).
 
 ```croft
 enum TreasureKind {

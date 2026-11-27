@@ -4,7 +4,7 @@ An aggregate is the consistency boundary around its entities and values. Its inv
 
 ## The root and its entities
 
-An aggregate's own fields form the root. An entity is declared inside the aggregate that owns it, and lives only there. Outside the aggregate, an entity is known by its [identity](04-identities.md).
+An aggregate's own fields form the root. An entity is declared inside the aggregate that owns it, and lives only there. Outside the aggregate, an entity is known by its [identity](04-identities.md). Fields can have [starting values](06-values.md#starting-values), like a player's `lives` here, which a factory can leave out.
 
 ```croft
 aggregate Room {
@@ -16,7 +16,7 @@ aggregate Room {
     entity Player {
         id: PlayerId
         position: Position
-        lives: Int where Range(0, 9)
+        lives: Int where Range(0, 9) = 3
     }
 
     entity Enemy {
