@@ -9,7 +9,7 @@ An adapter's body comes after `=`, like a function's. It provides every operatio
 ```croft
 // platform/spectrum.croft
 context Platform {
-    use { Screen, Keyboard, Key } from Dungeon
+    import { Screen, Keyboard, Key } from Dungeon
 
     adapter SpectrumScreen for Screen = {
         fn clear() = native zx_cls()

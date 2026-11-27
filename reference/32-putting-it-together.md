@@ -7,9 +7,9 @@ The file uses three things declared in other files of the same context: the `Ali
 ```croft
 // The room the player explores, one screen at a time.
 context Dungeon {
-    use { max } from Std.Numbers
+    import { max } from Std.Numbers
 
-    publish {
+    export {
         RoomId,
         EnemyId,
         Position,
