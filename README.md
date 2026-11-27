@@ -5,6 +5,9 @@ language that compiles to portable C89.
 
 Read it at [croftlang.com/learn](https://croftlang.com/learn).
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Licence
 
