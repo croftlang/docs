@@ -1,38 +1,42 @@
-# The smallest program
+# Hello world
 
-The smallest Croft program is one context with one function, and a domain that calls it. It's a good place to check your setup works before reading anything else.
+Every language starts here, and Croft isn't going to be the one that breaks tradition. This page gets a program running, so you know your setup works before reading anything else.
 
-## The context
+## The program
 
-A [context](02-contexts.md) holds the code. This one has a single function, `add`, and publishes it so the domain can use it.
-
-```croft
-context Hello {
-    publish { add }
-
-    fn add(a: Int, b: Int): Int = a + b
-}
-```
-
-## The domain
-
-The [domain](29-domain.md) is where the program starts. It lists its contexts, imports `add`, and prints the answer through the built-in Console port.
+A Croft program starts at its [domain](29-domain.md). This one prints a line through the built-in Console port, and that's all.
 
 ```croft
 domain Program {
-    contexts { Hello }
-    use { add } from Hello
     calls { Console }
-} = Console.print(add(2, 3).to_string())   // prints 5
+} = Console.print("Hello, World")
 ```
 
-## Running it
-
-Put both parts in one file, `hello.croft`. It needs no croft.toml, so you can run it straight away on the `desktop` target:
+Save it as `hello.croft`. It needs no croft.toml, so you can run it straight away on the `desktop` target:
 
 ```sh
 croft run hello.croft
 ```
+
+## Adding a context
+
+Real code lives in [contexts](02-contexts.md). Here the greeting moves into one, which publishes `greet` so the domain can use it.
+
+```croft
+context Greeter {
+    publish { greet }
+
+    fn greet(): String = "Hello, World"
+}
+
+domain Program {
+    contexts { Greeter }
+    use { greet } from Greeter
+    calls { Console }
+} = Console.print(greet()) // prints Hello, World
+```
+
+The domain lists the contexts it's made of, imports what it needs from them, and names the ports it calls.
 
 ## Source files
 

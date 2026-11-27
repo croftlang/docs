@@ -7,7 +7,7 @@ Each chapter of the reference is one Markdown file in `reference/`, and
 
 ```
 reference/
-├── 01-the-smallest-program.md   → croftlang.com/learn/the-smallest-program
+├── 01-hello-world.md            → croftlang.com/learn/hello-world
 ├── 02-contexts.md               → croftlang.com/learn/contexts
 └── ...
 ```
